@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 
 from .forms import AuthenticationForms
 
@@ -11,3 +12,7 @@ class LoginView(auth_views.LoginView):
 
 class LogoutView(auth_views.LogoutView):
     pass
+
+
+# class PasswordResetView(auth_views.PasswordResetView):
+#     template_name = "accounts/password_reset_form.html"

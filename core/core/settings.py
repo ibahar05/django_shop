@@ -40,10 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'website',
     'accounts',
+
+    'rest_framework',
+    "mail_templated",
+    "drf_yasg",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "corsheaders.middleware.CorsMiddleware", 
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                "core.context_processors.frontend_url",
+
             ],
         },
     },
@@ -161,4 +169,11 @@ if SHOW_DEBUGGER_TOOLBAR:
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
-    
+
+FRONTEND_URL="http://localhost:5173"
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+
+

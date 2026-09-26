@@ -12,3 +12,5 @@ djangorestframework_simplejwt
 django-mail-templated
 drf-yasg[validation]
 django-cors-headers
+black
+faker

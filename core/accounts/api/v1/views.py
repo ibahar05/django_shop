@@ -8,7 +8,8 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from django.conf import settings
 from .tokens import PasswordResetToken
 from rest_framework_simplejwt.exceptions import TokenError
-from accounts.models import User 
+from accounts.models import User
+
 
 class EmailPasswordReset(GenericAPIView):
     """
@@ -18,7 +19,7 @@ class EmailPasswordReset(GenericAPIView):
     """
 
     serializer_class = EmailPasswordResetSerializer
-    
+
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -32,13 +33,13 @@ class EmailPasswordReset(GenericAPIView):
         )
         EmailThreading(email_obj).start()
         return Response(
-            {"detail": "password reset link sent to your email"}, status=status.HTTP_201_CREATED
+            {"detail": "password reset link sent to your email"},
+            status=status.HTTP_201_CREATED,
         )
 
     def get_token_for_users(self, user):
         token = PasswordResetToken.for_user(user)
         return str(token)
-
 
 
 class PasswordResetConfirmView(GenericAPIView):
@@ -47,6 +48,7 @@ class PasswordResetConfirmView(GenericAPIView):
     a new password. The token is validated on several levels before the
     new password is accepted.
     """
+
     serializer_class = PasswordResetConfirmSerializer
 
     def post(self, request, token, *args, **kwargs):

@@ -43,6 +43,9 @@ class ProductModel(models.Model):
         discounted_amount = self.price - discount_amount
         return '{:,}'.format(round(discounted_amount))
 
+    def is_discounted(self):
+        return self.discount_percent != 0
+
     class Meta:
         ordering = ["-created_date"]
 

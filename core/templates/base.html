@@ -367,14 +367,14 @@
 
                     <div class="mb-7">
                         <!-- Form -->
-                        <form>
+                        <form action="{% url 'shop:product-grid'%}">
                             <!-- Input Card -->
                             <div class="input-card">
                                 <div class="input-card-form">
-                                    <input type="text" class="form-control form-control-lg" placeholder="جستجو محصولات"
+                                    <input type="text" class="form-control form-control-lg" placeholder="جستجو محصولات" name="q"
                                         aria-label="جستجو محصولات">
                                 </div>
-                                <button type="button" class="btn btn-primary btn-lg">جستجو کردن</button>
+                                <button type="submit" class="btn btn-primary btn-lg">جستجو کردن</button>
                             </div>
                             <!-- End Input Card -->
                         </form>
@@ -497,6 +497,8 @@
     <!-- JS Front -->
     <script src="{% static 'js/theme.min.js' %}"></script>
 
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+
     <!-- JS Plugins Init. -->
     <script>
         (function () {
@@ -598,6 +600,30 @@
             })
         })()
     </script>
+    <script>
+$(document).on("submit", ".ajax-form", function (e) {
+    e.preventDefault();
+    const form = $(this);
+    const messageBox = form.find(".form-message");
+
+    $.ajax({
+        url: form.attr("action"),
+        type: "POST",
+        data: form.serialize(),   // csrf_token هم داخلش هست
+        success: function (data) {
+            messageBox.text(data.message).css("color", "green");
+            form[0].reset();
+        },
+        error: function (xhr) {
+            let text = "خطایی رخ داد";
+            if (xhr.responseJSON && xhr.responseJSON.errors) {
+                text = Object.values(xhr.responseJSON.errors).flat().join(" | ");
+            }
+            messageBox.text(text).css("color", "red");
+        }
+    });
+});
+</script>
 
     {% block extra_js %} {% endblock extra_js %}
 

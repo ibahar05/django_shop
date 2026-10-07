@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         fake = Faker(locale="fa_IR")
-        # List of images
+
         image_list = [
             "./images/img1.jpg",
             "./images/img2.jpg",
@@ -24,12 +24,11 @@ class Command(BaseCommand):
             "./images/img6.jpg",
             "./images/img7.jpg",
             "./images/img8.jpg",
-            # Add more image filenames as needed
         ]
 
         categories = ProductCategoryModel.objects.all()
 
-        for _ in range(10):  # Generate 10 fake products
+        for _ in range(10):  
             num_categories = random.randint(1, 4)
             selected_categoreis = random.sample(list(categories), num_categories)
             title = ' '.join([fake.word() for _ in range(1,3)])
@@ -38,7 +37,7 @@ class Command(BaseCommand):
             image_obj = File(file=open(BASE_DIR / selected_image,"rb"),name=Path(selected_image).name)
             description = fake.paragraph(nb_sentences=10)
             stock = fake.random_int(min=0, max=10)
-            status = random.choice(ProductStatusType.choices)[0]  # Replace with your actual status choices
+            status = random.choice(ProductStatusType.choices)[0]
             price = fake.random_int(min=10000, max=100000)
             discount_percent = fake.random_int(min=0, max=50)
 

@@ -38,13 +38,21 @@ class ProductModel(models.Model):
     def __str__(self):
         return self.title
 
-    def get_price(self):     
+    def get_show_price(self):     
         discount_amount = self.price * Decimal(self.discount_percent / 100)
         discounted_amount = self.price - discount_amount
         return '{:,}'.format(round(discounted_amount))
 
+    def get_price(self):     
+            discount_amount = self.price * Decimal(self.discount_percent / 100)
+            discounted_amount = self.price - discount_amount
+            return (round(discounted_amount))
+
     def is_discounted(self):
         return self.discount_percent != 0
+
+    def is_published(self):
+        return self.status == ProductStatusType.publish.value
 
     class Meta:
         ordering = ["-created_date"]

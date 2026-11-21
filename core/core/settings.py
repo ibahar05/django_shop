@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "website",
     "accounts",
+    "dashboard",
     "shop",
+    "cart",
     "rest_framework",
     "mail_templated",
     "drf_yasg",
@@ -74,6 +76,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.frontend_url",
+                "cart.context_processors.cart_processor",
             ],
         },
     },
@@ -171,7 +174,7 @@ if SHOW_DEBUGGER_TOOLBAR:
 
 AUTH_USER_MODEL = "accounts.User"
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = 'accounts:login'
 
 FRONTEND_URL = "http://localhost:5173"
 

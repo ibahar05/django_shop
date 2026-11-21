@@ -79,7 +79,7 @@
                 <span class="d-block mb-2">قیمت کل:</span>
                 {% if object.is_discounted %}
                 <div class="d-flex align-items-center">
-                    <h3 class="mb-0 formatted-price">{{object.get_price}} </h3>
+                    <h3 class="mb-0 formatted-price">{{object.get_show_price}} </h3>
                     <span class="me-2 formatted-price text-decoration-line-through">{{object.price}}</span>
                 </div>
                 {% else %}
@@ -197,7 +197,7 @@
             <!-- End Accordion -->
 
             <div class="d-grid mb-4">
-                <button type="button" class="btn btn-primary btntransition">افزودن به سبد خرید</button>
+                <button type="button" class="btn btn-primary btntransition" onclick="addToCart('{{object.id}}')">افزودن به سبد خرید</button>
             </div>
 
             <!-- Media -->
@@ -625,5 +625,24 @@
     </div>
 </div>
 <!-- End Subscribe -->
-
+<script>
+    function addToCart(product_id) {
+        console.log(product_id)
+        $.ajax({
+            url: "{% url 'cart:session-add-product' %}",
+            method: 'POST',
+            data: {
+                product_id: product_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function (response) {
+                $("#total-cart-item-count").html(response.total_quantity)
+                console.log(response);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(errorThrown);
+            }
+        });
+    }
+</script>
 {% endblock content %}

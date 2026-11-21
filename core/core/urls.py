@@ -42,7 +42,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("website.urls")),
     path("accounts/", include("accounts.urls")),
+     path("dashboard/", include("dashboard.urls")),
     path("shop/", include("shop.urls")),
+     path("cart/", include("cart.urls")),
+    
     path(
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=None),

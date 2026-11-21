@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from accounts.models import User, Profile
 
+# admin.site.register(User)
 
 class CustomUserAdmin(UserAdmin):
     model = User
@@ -47,3 +48,11 @@ class CustomProfileAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile, CustomProfileAdmin)
 admin.site.register(User, CustomUserAdmin)
+
+from django.contrib.sessions.models import Session
+class SessionAdmin(admin.ModelAdmin):
+    def _session_data(self, obj):
+        return obj.get_decoded()
+    list_display = ['session_key', '_session_data', 'expire_date']
+    
+admin.site.register(Session, SessionAdmin)
